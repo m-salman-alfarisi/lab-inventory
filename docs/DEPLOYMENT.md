@@ -8,23 +8,26 @@ Panduan ini menggunakan **Vercel** (hosting) dan **Neon** (PostgreSQL), keduanya
 
 1. Buka [https://neon.com](https://neon.com) dan daftar/login.
 2. Buat project baru, pilih region terdekat (contoh: Singapore).
-3. Buka **Connection Details** dan salin **direct connection string**.
-4. Tambahkan `?sslmode=require` di akhir URL.
+3. Buka **Connection Details**, lalu salin dua connection string:
+   - **Pooled connection** untuk `DATABASE_URL` (runtime aplikasi).
+   - **Direct connection** untuk `DIRECT_URL` (migrasi database).
+4. Tambahkan `?sslmode=require` di akhir masing-masing URL.
 
 Contoh:
 
 ```env
-DATABASE_URL="postgresql://neondb_owner:password@ep-xxxx.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+DATABASE_URL="postgresql://neondb_owner:password@ep-xxxx-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
+DIRECT_URL="postgresql://neondb_owner:password@ep-xxxx.ap-southeast-1.aws.neon.tech/neondb?sslmode=require"
 ```
 
-> Gunakan **direct connection** (bukan pooled) agar `prisma migrate deploy` dapat berjalan saat build.
+> `DATABASE_URL` memakai host dengan akhiran `-pooler`; `DIRECT_URL` tidak. Pemisahan ini membuat runtime serverless tetap efisien dan migrasi tetap berjalan.
 
 ### Opsi B — Supabase
 
 1. Buat project di [https://supabase.com](https://supabase.com).
 2. Buka **Project Settings → Database → Connection string**.
-3. Gunakan connection string **Session pooler / Direct** untuk `DATABASE_URL`.
-4. Pastikan URL menggunakan `?sslmode=require`.
+3. Gunakan connection string **Session pooler** untuk `DATABASE_URL` dan **Direct connection** untuk `DIRECT_URL`.
+4. Pastikan kedua URL menggunakan `?sslmode=require`.
 
 > Untuk Supabase, hindari transaction pooler (port 6543) pada proses migrasi.
 
@@ -97,7 +100,7 @@ Setiap `git push` ke branch `main`, Vercel akan build dan deploy ulang. Migrasi 
 | Masalah | Solusi |
 | --- | --- |
 | Build gagal `P1001: Can't reach database server` | Periksa `DATABASE_URL`, pastikan database aktif dan `sslmode=require` |
-| Build gagal saat migrasi | Gunakan direct connection, bukan transaction pooler |
+| Build gagal saat migrasi | Pastikan `DIRECT_URL` memakai direct connection dan `DATABASE_URL` memakai pooled connection |
 | Login selalu gagal di production | Pastikan `AUTH_SECRET` sudah diset dan deploy ulang |
 | Akun demo tidak ditemukan | Pastikan seed berjalan; cek build log, atau jalankan `npm run db:seed` dengan `DATABASE_URL` production |
 | Halaman error 500 | Cek **Vercel → Deployments → Functions → Logs** |
