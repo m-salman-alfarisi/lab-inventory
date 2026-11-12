@@ -4,6 +4,12 @@
 
 Dibangun dengan Next.js 16, TypeScript, Tailwind CSS, Prisma, dan PostgreSQL. Aplikasi memiliki dua role dengan hak akses terpisah: **Admin** dan **Staff**.
 
+| | |
+| --- | --- |
+| **Aplikasi online** | https://lab-inventory-eosin.vercel.app |
+| **Repository GitHub** | https://github.com/m-salman-alfarisi/lab-inventory |
+| **Status** | ![Online](https://img.shields.io/badge/status-online-059669) |
+
 ---
 
 ## Demo
@@ -125,8 +131,11 @@ Sesuaikan `.env`:
 
 ```env
 DATABASE_URL="postgresql://postgres:password@localhost:5432/lab_inventory?schema=public"
+DIRECT_URL="postgresql://postgres:password@localhost:5432/lab_inventory?schema=public"
 AUTH_SECRET="secret-acak-minimal-32-karakter"
 ```
+
+> Untuk lokal, `DATABASE_URL` dan `DIRECT_URL` biasanya sama. Di Neon/Supabase, `DATABASE_URL` memakai pooled connection dan `DIRECT_URL` memakai direct connection agar migrasi berjalan lancar.
 
 Membuat `AUTH_SECRET`:
 
@@ -185,7 +194,12 @@ Seed membuat **10 barang** (melebihi minimal 5 dari ketentuan):
 
 ## Deployment (Wajib Online)
 
-Aplikasi siap di-deploy ke **Vercel** dengan database **Neon PostgreSQL** (keduanya memiliki paket gratis). Panduan langkah demi langkah tersedia di:
+Aplikasi sudah di-deploy ke **Vercel** dengan database **Neon PostgreSQL**:
+
+- **URL aplikasi:** https://lab-inventory-eosin.vercel.app
+- **Repository:** https://github.com/m-salman-alfarisi/lab-inventory
+
+Panduan deployment ulang tersedia di:
 
 **[docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)**
 

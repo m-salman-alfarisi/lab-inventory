@@ -52,7 +52,8 @@ Pastikan file `.env` **tidak** ikut ter-commit. File `.env.example` aman untuk d
 
 | Name           | Value                                            |
 | -------------- | ------------------------------------------------ |
-| `DATABASE_URL` | Connection string PostgreSQL dari Neon/Supabase   |
+| `DATABASE_URL` | Pooled connection string dari Neon/Supabase      |
+| `DIRECT_URL`   | Direct connection string (untuk migrasi)         |
 | `AUTH_SECRET`  | String acak minimal 32 karakter                  |
 
 Membuat `AUTH_SECRET`:

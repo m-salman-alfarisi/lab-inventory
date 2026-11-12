@@ -6,8 +6,8 @@ Isi data berikut sebelum menyerahkan tugas.
 | --- | --- |
 | Nama Lengkap | `[isi nama lengkap]` |
 | NIM | `[isi NIM]` |
-| URL Aplikasi (publik) | `[isi URL Vercel/Netlify]` |
-| URL Repository GitHub | `[isi URL repository]` |
+| URL Aplikasi (publik) | https://lab-inventory-eosin.vercel.app |
+| URL Repository GitHub | https://github.com/m-salman-alfarisi/lab-inventory |
 | Username Admin | `admin` |
 | Password Admin | `admin123` |
 | Username Staff | `staff` |
